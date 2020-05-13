@@ -266,7 +266,7 @@ void draw() {
     for (int i = 0; i < 6; i++) {
       if (cabbageEaten[i] == false) { 
         image(cabbage, cabbageX[i]*80, cabbageY[i]*80+i*320);
-        if (playerHealth <= PLAYER_MAX_HEALTH) {
+        if (playerHealth < PLAYER_MAX_HEALTH) {
           if (playerX+GROUNDHOG_H>cabbageX[i]*80&&playerX<cabbageX[i]*80+GABBAGE_H 
             && playerY+GROUNDHOG_H>cabbageY[i]*80+i*320&&playerY<cabbageY[i]*80+i*320+GABBAGE_H) {
             cabbageEaten[i] = true;
@@ -345,9 +345,14 @@ void draw() {
           playerMoveTimer = playerMoveDuration;
         }
       }
-      if(soilHealth[playerCol][playerRow+1] == 0)
-      {
-        downState = true;
+      if(playerRow < 23){
+        if(soilHealth[playerCol][playerRow+1] == 0)
+        {
+          downState = true;
+        }
+      }
+      else{
+        downState = false;
       }
     }
     // If player is now moving?
@@ -384,13 +389,17 @@ void draw() {
         if (playerMoveTimer == 0) {
           playerRow++;
           playerY = SOIL_SIZE * playerRow;
-
-          if(soilHealth[playerCol][playerRow+1] == 0)
-          {
-            downState = true;
+          if(playerRow < 23){
+            if(soilHealth[playerCol][playerRow+1] == 0)
+            {
+              downState = true;
+            }
+            else 
+            {
+              downState = false;
+            }
           }
-          else 
-          {
+          else{
             downState = false;
           }
         } else {
